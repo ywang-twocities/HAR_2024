@@ -26,6 +26,7 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir):
 
     # confusion matrix visualization
     ConfusionMatrixDisplay.from_predictions(y_test, predictions, xticks_rotation='vertical', normalize='true')
-    plt.show()
+    plt.show(block=False)
+    input("press enter to continue: ")
 
     print('The number of CIR used in model is: {}'.format(X_train.shape[1] / num_cir))

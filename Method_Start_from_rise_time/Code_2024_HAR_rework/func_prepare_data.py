@@ -37,13 +37,9 @@ def prepare_data(config, data_dir, exp_envs, scenario):
 
     # keep only the samples with desired length of number_cir * length_cir
     X_cropped, y = zip(*[(element, y[i]) for i, element in enumerate(X_cropped) if len(element) == number_cir * length_cir])
-    X_cropped, y = list(X_cropped), list(y)
+    X_cropped, y = np.array(X_cropped), np.array(y)
 
-    # data transform
-    X_train = np.array(X_cropped)
-    X_train = X_train.reshape(X_train.shape[0], -1)
-    y_train = np.array(y)
-
+    X_train, X_test, y_train, y_test = None, None, None, None
     if exp_envs[scenario].startswith('LOS') or exp_envs[scenario].startswith('Complex'):
         X_train, X_test, y_train, y_test = train_test_split(X_cropped, y, test_size=0.2, random_state=40)
     elif exp_envs[scenario].startswith('NLOS'):
