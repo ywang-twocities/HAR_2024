@@ -28,5 +28,4 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir):
     ConfusionMatrixDisplay.from_predictions(y_test, predictions, xticks_rotation='vertical', normalize='true')
     plt.show()
 
-    # 额外的信息
     print('The number of CIR used in model is: {}'.format(X_train.shape[1] / num_cir))
