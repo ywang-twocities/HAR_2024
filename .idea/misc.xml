@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="executionMode" value="BINARY" />
     <option name="pathToExecutable" value="C:\Users\2715439W\Anaconda3\Scripts\black.exe" />
-    <option name="sdkUUID" value="4e94ca9c-d129-45ea-a927-98ae2e1e9862" />
+    <option name="sdkName" value="Python 3.9 (tf2)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (tf2)" project-jdk-type="Python SDK" />
   <component name="PyCharmProfessionalAdvertiser">
