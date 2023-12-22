@@ -8,7 +8,7 @@ from keras.callbacks import ReduceLROnPlateau
 
 def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir, model_name, label_encoder):
     # training
-    if model_name in ['gru', 'lstm', 'lstm_fcn', 'rnn', '2D_fcn', 'mlp']:
+    if model_name in ['gru', 'lstm', 'lstm_fcn', 'rnn', '2d_fcn', 'cnn', 'mlp']:
         # Normalize X_train, X_test first before reshaping.
         # Accordingly, axis=-1 indicates normalizing along each timestep.
         from keras.layers import Normalization
@@ -18,17 +18,22 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir, m
         X_test = norm(X_test)
         X_train = np.array(X_train)
         X_test = np.array(X_test)
-        # Reshape X_train, X_test into dimension of (samples, time_steps, feature), where feature equals to 1 as it's
-        # uni-variate.
-        X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
-        X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+
+        if model_name in ['gru', 'lstm', 'lstm_fcn', 'rnn', '2d_fcn']:
+            # Reshape X_train, X_test into dimensions of (samples, time_steps, feature) for certain models.
+            X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+            X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+        elif model_name in ['cnn', 'mlp']:
+            # Reshape X_train, X_test into dimensions of (samples, feature) for cnn.
+            X_train = X_train.reshape(X_train.shape[0], X_train.shape[1])
+            X_test = X_test.reshape(X_test.shape[0], X_test.shape[1])
 
         y_train = to_categorical(y_train, num_classes=7)
         y_test_encoded = to_categorical(y_test, num_classes=7)
         reduce_lr = ReduceLROnPlateau(monitor='loss', factor=0.5, patience=4, min_lr=1e-6)
         history = model.fit(X_train,
                             y_train,
-                            epochs=300,
+                            epochs=100,
                             validation_data=(X_test, y_test_encoded),
                             batch_size=32,
                             verbose=2,
