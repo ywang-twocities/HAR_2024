@@ -36,7 +36,7 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir, m
                             epochs=100,
                             validation_data=(X_test, y_test_encoded),
                             batch_size=32,
-                            verbose=2,
+                            verbose=0,
                             callbacks=[reduce_lr]
                             )
         predictions = model.predict(X_test)
@@ -73,5 +73,12 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir, m
     ConfusionMatrixDisplay.from_predictions(y_test, predictions, xticks_rotation='vertical', normalize='true')
     plt.show(block=False)
     plt.pause(0.1)
+    plt.close()
 
     print('The number of CIR used in model is: {}'.format(X_train.shape[1] / num_cir))
+
+    report = classification_report(y_test_str, predictions_str, output_dict=True)
+    accuracies = {label: report[label]['precision'] for label in report if label in label_encoder.classes_}
+    return accuracies
+
+

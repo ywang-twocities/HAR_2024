@@ -3,19 +3,21 @@ from sklearn.model_selection import train_test_split
 from func_CIR_processing import read_log_file, file_with_label, crop_combine
 
 
-def prepare_data(config, data_dir):
+def prepare_data(config, data_dir, number_cir, length_cir):
     """
-    prepare data for further model training and testing.
+    Prepare data for further model training and testing.
 
-    :param config: config.json
+    :param length_cir: For test of different values (instead of from static json file).
+    :param number_cir: For test of different values (instead of from static json file).
+    :param config: Config.json
     :param data_dir: data directory
     :return: X and y sets.
     """
     # read params from config.json
-    number_cir = config['number_cir']
+    # number_cir = config['number_cir']
     sample_start = config['sample_start']
     sample_length = config['sample_length']
-    length_cir = config['length_cir']
+    # length_cir = config['length_cir']
     nr = config['nr']
     rate_to_max = config['rate_to_max']
 
