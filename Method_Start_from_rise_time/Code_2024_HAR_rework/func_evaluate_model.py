@@ -77,8 +77,11 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, model, num_cir, m
 
     print('The number of CIR used in model is: {}'.format(X_train.shape[1] / num_cir))
 
+    # Store overall model accuracy
+    overall_accuracy = accuracy_test  # or accuracy_train, depending on which you need
+
     report = classification_report(y_test_str, predictions_str, output_dict=True)
-    accuracies = {label: report[label]['precision'] for label in report if label in label_encoder.classes_}
-    return accuracies
+    act_accuracies = {label: report[label]['precision'] for label in report if label in label_encoder.classes_}
+    return act_accuracies, overall_accuracy
 
 
